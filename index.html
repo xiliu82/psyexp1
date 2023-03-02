@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+
+    <script src="https://unpkg.com/jspsych@7.3.1"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-call-function@1.1.2"></script>
+
+    <link href="https://unpkg.com/jspsych@7.3.1/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+    <!-- jsPsychSheet library -->
+    <script src="https://brain2ai.github.io/jsPsychSheet/jspsychsheet.js"></script>
+    <link rel="stylesheet" href="https://brain2ai.github.io/jsPsychSheet/jspsychsheet.css">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  </head>
+  <body></body>
+  <script>
+
+    const jsPsych = initJsPsych();
+    
+    var timeline = [];
+
+    // var preload = {
+    //   type: 'preload',
+    //   auto_preload: true
+    // }
+
+    // var trial_video = {
+    //     type: 'video-keyboard-response',
+    //     stimulus: [
+    //       // 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4'
+    //       'https://v2.kickstarter.com/1677570955-Oy%2Bg75DTnBFSI%2BoTqJOnraSY2uS18yBP1FQYkUaY0VI%3D/projects/4493136/video-1211595-h264_high.mp4'
+    //     ],
+    //     choices: jsPsych.NO_KEYS,
+    //     controls: true,
+    //     trial_ends_after_video: true
+    // };
+
+    // timeline.push(trial_video);
+
+    var likert_scale = [
+        "1 (Definitely Not Seen)", 
+        "2", 
+        "3", 
+        "4 (Neutral)", 
+        "5",
+        "6",
+        "7 (Definitely Seen)"
+    ];
+    
+    var trial_seen = {
+        type: jsPsychSurveyLikert,
+        preamble: "On a scale of “1”to “7”, please rate how likely you’ve seen the video before?",
+        questions: [{
+          prompt: "", name: 'Q1', required: true,
+          labels: [["1","Definitely Not Seen"], ["2"], ["3"], ["4","Neutral"], ["5"], ["6"], ["7","Definitely Seen"]]
+        }],
+    };
+
+    timeline.push(trial_seen);
+
+    var trial_adj = {
+        type: jsPsychSurveyLikert,
+        preamble: "Please rate the video content on each set of adjectives",
+        questions: [{ 
+          prompt: "", name: 'Q2', 
+          labels: ["1 (Dull)", "2", "3", "4", "5", "6", "7 (Exiting)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Fresh)", "2", "3", "4", "5", "6", "7 (Routine)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Novel)", "2", "3", "4", "5", "6", "7 (Predictable)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Usual)", "2", "3", "4", "5", "6", "7 (Unusual)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Unique)", "2", "3", "4", "5", "6", "7 (Ordinary)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Commonplace)", "2", "3", "4", "5", "6", "7 (Original)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Trendsetting)", "2", "3", "4", "5", "6", "7 (Warmed Over)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Average)", "2", "3", "4", "5", "6", "7 (Revolutionary)"]
+        }, {
+          prompt: "", name: '', 
+          labels: ["1 (Nothing Special)", "2", "3", "4", "5", "6", "7 (An Industry Model)"]
+        }
+
+        ],
+        randomize_question_order: false
+    };
+
+    timeline.push(trial_adj);
+
+    scale_7 = ["1 (Disagree Strongly)", "2 (Disagree Somewhat)", "3 (Neutral)", "4 (Agree Somewhat)", "5 (Agree Strongly)", "6 (Fully Agree)", "7 (Completely Agree)"]
+
+    var trial_presenter = {
+        type: jsPsychSurveyLikert,
+        preamble: "On a scale of “1”to “7”, please rate the extend of the following sentences that describes how you think the presenter in the video is.",
+        questions: [{
+          prompt: "The presenter(s) had energetic body movements.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presenter(s) had rich body language.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presenter(s) showed animated facial expression.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presenter(s) used a lot of gestures.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presenter’s face lit up when he/she or he talked.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presenter(s) talked with varied tone and pitch.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presentation content had substance.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presentation was thoughtful and in-depth.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presenter(s) articulated the relationship between the business plan and the broader context.", name: '', 
+          labels: scale_7
+        },{
+          prompt: "The presenter(s) cited facts to support his/her arguments.", name: '', 
+          labels: scale_7
+        }],
+        randomize_question_order: false
+    };
+
+    timeline.push(trial_presenter);
+
+    var trial_send = {
+      type: jsPsychCallFunction,
+      async: true,
+      func: function(done){
+        console.log(jsPsych.data.get().json())
+
+        url = "https://script.google.com/macros/s/AKfycbyBpM5XMJOK73mfgnJ16bb8nx41HOAEfUtVqJYsSXFZ_qlqtLGmmvoObuM0R80pyVMj/exec"
+        jsPsychSheet.uploadData(url, jsPsych.data.get().csv())
+    }}
+
+    timeline.push(trial_send);
+    jsPsych.run(timeline);
+
+  </script>
+</html>
