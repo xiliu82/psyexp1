@@ -29,18 +29,17 @@
     //   auto_preload: true
     // }
 
-    // var trial_video = {
-    //     type: 'video-keyboard-response',
-    //     stimulus: [
-    //       // 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4'
-    //       'https://v2.kickstarter.com/1677570955-Oy%2Bg75DTnBFSI%2BoTqJOnraSY2uS18yBP1FQYkUaY0VI%3D/projects/4493136/video-1211595-h264_high.mp4'
-    //     ],
-    //     choices: jsPsych.NO_KEYS,
-    //     controls: true,
-    //     trial_ends_after_video: true
-    // };
+    var trial_video = {
+        type: 'video-keyboard-response',
+        stimulus: [
+          'https://v2.kickstarter.com/1677570955-Oy%2Bg75DTnBFSI%2BoTqJOnraSY2uS18yBP1FQYkUaY0VI%3D/projects/4493136/video-1211595-h264_high.mp4'
+        ],
+        choices: jsPsych.NO_KEYS,
+        controls: true,
+        trial_ends_after_video: true
+    };
 
-    // timeline.push(trial_video);
+    timeline.push(trial_video);
 
     var likert_scale = [
         "1 (Definitely Not Seen)", 
