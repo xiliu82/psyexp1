@@ -6,6 +6,7 @@
     <script src="https://unpkg.com/jspsych@7.3.1"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.2"></script>
     <script src="https://unpkg.com/@jspsych/plugin-call-function@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-video-keyboard-response@1.1.2"></script>
 
     <link href="https://unpkg.com/jspsych@7.3.1/css/jspsych.css" rel="stylesheet" type="text/css" />
 
@@ -30,26 +31,17 @@
     // }
 
     var trial_video = {
-        type: 'video-keyboard-response',
+        type: jsPsychHtmlVideoResponse,
+        prompt: "Please watch the following video in full",
         stimulus: [
           'https://v2.kickstarter.com/1677570955-Oy%2Bg75DTnBFSI%2BoTqJOnraSY2uS18yBP1FQYkUaY0VI%3D/projects/4493136/video-1211595-h264_high.mp4'
         ],
-        choices: jsPsych.NO_KEYS,
+        choices: "NO_KEYS",
         controls: true,
         trial_ends_after_video: true
     };
 
     timeline.push(trial_video);
-
-    var likert_scale = [
-        "1 (Definitely Not Seen)", 
-        "2", 
-        "3", 
-        "4 (Neutral)", 
-        "5",
-        "6",
-        "7 (Definitely Seen)"
-    ];
     
     var trial_seen = {
         type: jsPsychSurveyLikert,
